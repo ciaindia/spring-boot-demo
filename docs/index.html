@@ -332,7 +332,7 @@ public class DemoApplication {
                     </tr>
                     <tr>
                         <td>salary</td>
-                        <td>Double</td>
+                        <td>Integer</td>
                         <td>Employee salary</td>
                     </tr>
                 </table>
@@ -617,10 +617,66 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
                 <h3>Prerequisites</h3>
                 <ul>
                     <li>Java 17 or higher</li>
-                    <li>Maven 3.6+ or Gradle 7+</li>
+                    <li>Maven 3.6+</li>
                     <li>MySQL/PostgreSQL/H2 Database</li>
-                    <li>IDE (IntelliJ IDEA, Eclipse, or VS Code)</li>
+                    <li>Visual Studio Code with extensions:
+                        <ul>
+                            <li>Extension Pack for Java</li>
+                            <li>Spring Boot Extension Pack</li>
+                            <li>Spring Initializr Java Support</li>
+                        </ul>
+                    </li>
                 </ul>
+                
+                <h3>Project Setup with VSCode</h3>
+                <div class="highlight">
+                    <strong>Creating Project with Spring Initializr in VSCode:</strong>
+                </div>
+                <ol>
+                    <li>Open VSCode Command Palette (Ctrl+Shift+P or Cmd+Shift+P)</li>
+                    <li>Type "Spring Initializr: Create a Maven Project"</li>
+                    <li>Select Spring Boot version (3.x recommended)</li>
+                    <li>Enter Group Id: <code>com.example</code></li>
+                    <li>Enter Artifact Id: <code>demo</code></li>
+                    <li>Select packaging type: <code>Jar</code></li>
+                    <li>Select Java version: <code>17</code> or higher</li>
+                    <li>Add dependencies:
+                        <ul>
+                            <li>Spring Web</li>
+                            <li>Spring Data JPA</li>
+                            <li>MySQL Driver (or H2 for testing)</li>
+                        </ul>
+                    </li>
+                    <li>Choose folder location and generate project</li>
+                </ol>
+                
+                <div class="highlight">
+                    <strong>VSCode Project Structure:</strong>
+                </div>
+                <div class="code-block">demo/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/example/demo/
+│   │   │       ├── DemoApplication.java
+│   │   │       ├── config/
+│   │   │       │   └── AppConfig.java
+│   │   │       ├── controller/
+│   │   │       │   ├── EmployeeController.java
+│   │   │       │   └── AuthController.java
+│   │   │       ├── entity/
+│   │   │       │   └── Employee.java
+│   │   │       ├── repository/
+│   │   │       │   └── EmployeeRepository.java
+│   │   │       ├── interceptor/
+│   │   │       │   └── JwtInterceptor.java
+│   │   │       └── util/
+│   │   │           └── JWTUtil.java
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+├── pom.xml
+└── README.md</div>
                 
                 <h3>Required Dependencies (pom.xml)</h3>
                 <div class="code-block">&lt;dependencies&gt;
@@ -677,18 +733,97 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 spring.jpa.properties.hibernate.format_sql=true</div>
                 
                 <h3>Running the Application</h3>
-                <div class="code-block"># Using Maven
+                
+                <div class="highlight">
+                    <strong>Option 1: Using VSCode Spring Boot Dashboard</strong>
+                </div>
+                <ol>
+                    <li>Open the Spring Boot Dashboard in VSCode (left sidebar)</li>
+                    <li>Find your "demo" application</li>
+                    <li>Click the "Run" icon (play button) next to the application</li>
+                    <li>Application will start on http://localhost:8080</li>
+                </ol>
+                
+                <div class="highlight">
+                    <strong>Option 2: Using VSCode Terminal</strong>
+                </div>
+                <div class="code-block"># Navigate to project directory
+cd demo
+
+# Run using Maven wrapper (if available)
+./mvnw spring-boot:run
+
+# Or using Maven directly
 mvn spring-boot:run
 
-# Using Gradle
-gradle bootRun
+# Or run the main class directly in VSCode
+# Right-click on DemoApplication.java → Run Java</div>
 
-# Using JAR
-java -jar demo-0.0.1-SNAPSHOT.jar</div>
+                <div class="highlight">
+                    <strong>Option 3: Build and Run JAR</strong>
+                </div>
+                <div class="code-block"># Build the project
+mvn clean package
+
+# Run the JAR file
+java -jar target/demo-0.0.1-SNAPSHOT.jar</div>
+                
+                <div class="highlight">
+                    <strong>VSCode Debugging:</strong>
+                </div>
+                <ol>
+                    <li>Set breakpoints in your code by clicking left of line numbers</li>
+                    <li>Press F5 or click "Run and Debug" in sidebar</li>
+                    <li>Select "Java" configuration</li>
+                    <li>Application will start in debug mode</li>
+                </ol>
                 
                 <h3>Testing the API</h3>
+                
                 <div class="highlight">
-                    <strong>Using cURL:</strong>
+                    <strong>Option 1: Using VSCode REST Client Extension</strong>
+                </div>
+                <p>Install "REST Client" extension by Huachao Mao, then create a file <code>api-test.http</code>:</p>
+                <div class="code-block">### Login
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin@123"
+}
+
+### Create Employee
+POST http://localhost:8080/employee
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "department": "IT",
+    "salary": 75000
+}
+
+### Get All Employees
+GET http://localhost:8080/employee
+
+### Get Employee by ID
+GET http://localhost:8080/employee/1
+
+### Update Employee
+PUT http://localhost:8080/employee/1
+Content-Type: application/json
+
+{
+    "name": "John Smith",
+    "department": "HR",
+    "salary": 80000
+}
+
+### Delete Employee
+DELETE http://localhost:8080/employee/1</div>
+                
+                <div class="highlight">
+                    <strong>Option 2: Using cURL in VSCode Terminal:</strong>
                 </div>
                 <div class="code-block"># 1. Login to get token
 curl -X POST http://localhost:8080/auth/login \
@@ -715,13 +850,13 @@ curl -X PUT http://localhost:8080/employee/1 \
 curl -X DELETE http://localhost:8080/employee/1</div>
                 
                 <div class="highlight">
-                    <strong>Using Postman:</strong>
+                    <strong>Option 3: Using Postman or Thunder Client (VSCode Extension):</strong>
                 </div>
                 <ol>
-                    <li>Import the API endpoints into Postman</li>
-                    <li>Create a new request to /auth/login and get the token</li>
+                    <li>Install "Thunder Client" extension in VSCode (alternative to Postman)</li>
+                    <li>Click Thunder Client icon in sidebar</li>
+                    <li>Create new request and test endpoints</li>
                     <li>For protected endpoints, add Authorization header with "Bearer {token}"</li>
-                    <li>Test all CRUD operations</li>
                 </ol>
             </section>
             
