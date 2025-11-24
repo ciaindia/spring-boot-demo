@@ -247,7 +247,7 @@
                 <div class="mermaid">
                     graph TD
                         A[Client Request] --> B{Authentication Required?}
-                        B -->|No| C[/auth/login or /employee/**]
+                        B -->|No| C[Endpoint: /auth/login or /employee/**]
                         B -->|Yes| D[JwtInterceptor]
                         D -->|Valid Token| E[Controller Layer]
                         D -->|Invalid Token| F[401 Unauthorized]
@@ -271,32 +271,21 @@
                 <h3>Component Diagram</h3>
                 <div class="mermaid">
                     graph TB
-                        subgraph "Spring Boot Application"
-                            A[DemoApplication<br/>Main Entry Point]
-                            B[AppConfig<br/>Configuration]
-                            
-                            subgraph Controllers
-                                C[EmployeeController]
-                                D[AuthController]
-                            end
-                            
-                            subgraph Security
-                                E[JwtInterceptor]
-                                F[JWTUtil]
-                            end
-                            
-                            subgraph Data Access
-                                G[EmployeeRepository]
-                                H[Employee Entity]
-                            end
-                            
-                            A --> B
-                            B --> E
-                            C --> G
-                            D --> F
-                            E --> F
-                            G --> H
-                        end
+                        A[DemoApplication - Main Entry Point]
+                        B[AppConfig - Configuration]
+                        C[EmployeeController]
+                        D[AuthController]
+                        E[JwtInterceptor]
+                        F[JWTUtil]
+                        G[EmployeeRepository]
+                        H[Employee Entity]
+                        
+                        A --> B
+                        B --> E
+                        C --> G
+                        D --> F
+                        E --> F
+                        G --> H
                 </div>
             </section>
             
