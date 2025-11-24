@@ -435,7 +435,7 @@ public class DemoApplication {
                 <div class="highlight">
                     <strong>Step 1:</strong> Login to get JWT token
                 </div>
-                <div class="code-block">POST /auth/login
+                <div class="code-block"><pre>POST /auth/login
 Content-Type: application/json
 
 {
@@ -446,7 +446,7 @@ Content-Type: application/json
 Response:
 {
     "token": "eyJhbGciOiJIUzI1NiJ9..."
-}</div>
+}</pre></div>
                 
                 <div class="highlight">
                     <strong>Step 2:</strong> Use token in subsequent requests
@@ -480,11 +480,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
                     <strong>/employee</strong>
                     <p>Create new employee</p>
                     <p><strong>Request Body:</strong></p>
-                    <div class="code-block">{
+                    <div class="code-block"><pre>{
     "name": "John Doe",
     "department": "IT",
     "salary": 75000.0
-}</div>
+}</pre></div>
                     <p><strong>Response:</strong> Created Employee object</p>
                 </div>
                 
@@ -548,10 +548,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
                     <strong>/auth/login</strong>
                     <p>Authenticate user and get JWT token</p>
                     <p><strong>Request Body:</strong></p>
-                    <div class="code-block">{
+                    <div class="code-block"><pre>{
     "username": "admin",
     "password": "admin@123"
-}</div>
+}</pre></div>
                     <p><strong>Success Response:</strong> { "token": "jwt_token_string" }</p>
                     <p><strong>Error Response:</strong> "Invalid credentials" (Status: 401)</p>
                 </div>
@@ -562,12 +562,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
                 <h2>💾 Database Schema</h2>
                 
                 <h3>Employee Table</h3>
-                <div class="code-block">CREATE TABLE employee (
+                <div class="code-block"><pre>CREATE TABLE employee (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     department VARCHAR(255),
     salary DOUBLE
-);</div>
+);</pre></div>
                 
                 <h3>Query Comparison</h3>
                 <table>
