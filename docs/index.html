@@ -653,7 +653,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
                 <div class="highlight">
                     <strong>VSCode Project Structure:</strong>
                 </div>
-                <div class="code-block">demo/
+                <div class="code-block"><pre>
+                    demo/
 ├── src/
 │   ├── main/
 │   │   ├── java/
@@ -676,10 +677,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
 │   │       └── application.properties
 │   └── test/
 ├── pom.xml
-└── README.md</div>
+└── README.md</pre></div>
                 
                 <h3>Required Dependencies (pom.xml)</h3>
-                <div class="code-block">&lt;dependencies&gt;
+                <div class="code-block"><pre>&lt;dependencies&gt;
     &lt;!-- Spring Boot Starter Web --&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
@@ -714,10 +715,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
         &lt;artifactId&gt;jjwt-jackson&lt;/artifactId&gt;
         &lt;version&gt;0.11.5&lt;/version&gt;
     &lt;/dependency&gt;
-&lt;/dependencies&gt;</div>
+&lt;/dependencies&gt;</pre></div>
                 
                 <h3>Application Configuration (application.properties)</h3>
-                <div class="code-block"># Server Configuration
+                <div class="code-block"><pre># Server Configuration
 server.port=8080
 
 # Database Configuration
@@ -730,7 +731,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-spring.jpa.properties.hibernate.format_sql=true</div>
+spring.jpa.properties.hibernate.format_sql=true</pre></div>
                 
                 <h3>Running the Application</h3>
                 
@@ -747,7 +748,7 @@ spring.jpa.properties.hibernate.format_sql=true</div>
                 <div class="highlight">
                     <strong>Option 2: Using VSCode Terminal</strong>
                 </div>
-                <div class="code-block"># Navigate to project directory
+                <div class="code-block"><dev># Navigate to project directory
 cd demo
 
 # Run using Maven wrapper (if available)
@@ -757,16 +758,16 @@ cd demo
 mvn spring-boot:run
 
 # Or run the main class directly in VSCode
-# Right-click on DemoApplication.java → Run Java</div>
+# Right-click on DemoApplication.java → Run Java</dev></div>
 
                 <div class="highlight">
                     <strong>Option 3: Build and Run JAR</strong>
                 </div>
-                <div class="code-block"># Build the project
+                <div class="code-block"><pre># Build the project
 mvn clean package
 
 # Run the JAR file
-java -jar target/demo-0.0.1-SNAPSHOT.jar</div>
+java -jar target/demo-0.0.1-SNAPSHOT.jar</pre></div>
                 
                 <div class="highlight">
                     <strong>VSCode Debugging:</strong>
@@ -784,7 +785,7 @@ java -jar target/demo-0.0.1-SNAPSHOT.jar</div>
                     <strong>Option 1: Using VSCode REST Client Extension</strong>
                 </div>
                 <p>Install "REST Client" extension by Huachao Mao, then create a file <code>api-test.http</code>:</p>
-                <div class="code-block">### Login
+                <div class="code-block"><pre>### Login
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
@@ -820,12 +821,12 @@ Content-Type: application/json
 }
 
 ### Delete Employee
-DELETE http://localhost:8080/employee/1</div>
+DELETE http://localhost:8080/employee/1</pre></div>
                 
                 <div class="highlight">
                     <strong>Option 2: Using cURL in VSCode Terminal:</strong>
                 </div>
-                <div class="code-block"># 1. Login to get token
+                <div class="code-block"><pre># 1. Login to get token
 curl -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin@123"}'
@@ -847,7 +848,7 @@ curl -X PUT http://localhost:8080/employee/1 \
   -d '{"name":"John Smith","department":"HR","salary":80000}'
 
 # 6. Delete employee
-curl -X DELETE http://localhost:8080/employee/1</div>
+curl -X DELETE http://localhost:8080/employee/1</pre></div>
                 
                 <div class="highlight">
                     <strong>Option 3: Using Postman or Thunder Client (VSCode Extension):</strong>
