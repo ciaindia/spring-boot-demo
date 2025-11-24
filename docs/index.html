@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System - Documentation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: #34495e;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 1rem;
+            border-left: 4px solid #ffc107;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            padding: 1rem;
+            border-left: 4px solid #0dcaf0;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .endpoint {
+            background: #e7f3ff;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            border-left: 4px solid #0d6efd;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+        
+        .get { background: #28a745; color: white; }
+        .post { background: #007bff; color: white; }
+        .put { background: #ffc107; color: black; }
+        .delete { background: #dc3545; color: white; }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @media print {
+            nav { display: none; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Employee Management System</h1>
+            <p>Spring Boot REST API with JWT Authentication</p>
+        </header>
+        
+        <nav>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#components">Components</a></li>
+                <li><a href="#endpoints">API Endpoints</a></li>
+                <li><a href="#authentication">Authentication</a></li>
+                <li><a href="#database">Database</a></li>
+                <li><a href="#setup">Setup Guide</a></li>
+            </ul>
+        </nav>
+        
+        <div class="content">
+            <!-- Overview Section -->
+            <section id="overview">
+                <h2>📖 Overview</h2>
+                <p>This is a comprehensive Employee Management System built with Spring Boot that provides a RESTful API for managing employee records. The system includes JWT-based authentication, multiple query methods (JPA, JPQL, and Native SQL), and follows modern Java enterprise development patterns.</p>
+                
+                <h3>Key Features</h3>
+                <ul>
+                    <li>✅ Complete CRUD operations for employee management</li>
+                    <li>✅ JWT-based authentication and authorization</li>
+                    <li>✅ Multiple database query approaches (JPA, JPQL, Native SQL)</li>
+                    <li>✅ RESTful API design</li>
+                    <li>✅ Spring Data JPA integration</li>
+                    <li>✅ Interceptor-based request validation</li>
+                    <li>✅ Pagination support for native queries</li>
+                </ul>
+                
+                <h3>Technology Stack</h3>
+                <ul>
+                    <li><strong>Framework:</strong> Spring Boot 3.x</li>
+                    <li><strong>Language:</strong> Java 17+</li>
+                    <li><strong>Database:</strong> JPA-compatible (MySQL/PostgreSQL/H2)</li>
+                    <li><strong>Security:</strong> JWT (JSON Web Tokens) with jjwt library</li>
+                    <li><strong>Build Tool:</strong> Maven/Gradle</li>
+                </ul>
+            </section>
+            
+            <!-- Architecture Section -->
+            <section id="architecture">
+                <h2>🏗️ System Architecture</h2>
+                
+                <h3>Application Flow</h3>
+                <div class="mermaid">
+                    graph TD
+                        A[Client Request] --> B{Authentication Required?}
+                        B -->|No| C[/auth/login or /employee/**]
+                        B -->|Yes| D[JwtInterceptor]
+                        D -->|Valid Token| E[Controller Layer]
+                        D -->|Invalid Token| F[401 Unauthorized]
+                        C --> E
+                        E --> G[Service/Repository Layer]
+                        G --> H[(Database)]
+                        H --> G
+                        G --> E
+                        E --> I[JSON Response]
+                </div>
+                
+                <h3>Layer Architecture</h3>
+                <div class="mermaid">
+                    graph LR
+                        A[Presentation Layer<br/>Controllers] --> B[Business Layer<br/>Repository]
+                        B --> C[Persistence Layer<br/>JPA/Hibernate]
+                        C --> D[(Database)]
+                        E[Security Layer<br/>JWT Interceptor] -.->|Validates| A
+                </div>
+                
+                <h3>Component Diagram</h3>
+                <div class="mermaid">
+                    graph TB
+                        subgraph "Spring Boot Application"
+                            A[DemoApplication<br/>Main Entry Point]
+                            B[AppConfig<br/>Configuration]
+                            
+                            subgraph Controllers
+                                C[EmployeeController]
+                                D[AuthController]
+                            end
+                            
+                            subgraph Security
+                                E[JwtInterceptor]
+                                F[JWTUtil]
+                            end
+                            
+                            subgraph Data Access
+                                G[EmployeeRepository]
+                                H[Employee Entity]
+                            end
+                            
+                            A --> B
+                            B --> E
+                            C --> G
+                            D --> F
+                            E --> F
+                            G --> H
+                        end
+                </div>
+            </section>
+            
+            <!-- Components Section -->
+            <section id="components">
+                <h2>🧩 Component Details</h2>
+                
+                <h3>1. DemoApplication.java</h3>
+                <div class="info-box">
+                    <strong>Purpose:</strong> Main entry point of the Spring Boot application
+                </div>
+                <div class="code-block">@SpringBootApplication
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}</div>
+                
+                <h3>2. Employee Entity</h3>
+                <div class="info-box">
+                    <strong>Purpose:</strong> JPA entity representing the employee table
+                </div>
+                <p><strong>Fields:</strong></p>
+                <table>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>Integer</td>
+                        <td>Primary key (auto-generated)</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>String</td>
+                        <td>Employee name</td>
+                    </tr>
+                    <tr>
+                        <td>department</td>
+                        <td>String</td>
+                        <td>Department name</td>
+                    </tr>
+                    <tr>
+                        <td>salary</td>
+                        <td>Double</td>
+                        <td>Employee salary</td>
+                    </tr>
+                </table>
+                
+                <h3>3. EmployeeRepository</h3>
+                <div class="info-box">
+                    <strong>Purpose:</strong> Data access layer with multiple query approaches
+                </div>
+                
+                <h4>Query Methods:</h4>
+                <ul>
+                    <li><strong>JPA Methods:</strong> Inherited from JpaRepository (findAll, findById, save, delete)</li>
+                    <li><strong>Native SQL:</strong> Direct SQL queries for performance-critical operations</li>
+                    <li><strong>JPQL:</strong> Object-oriented queries for entity manipulation</li>
+                </ul>
+                
+                <h3>4. EmployeeController</h3>
+                <div class="info-box">
+                    <strong>Purpose:</strong> REST API endpoints for employee operations
+                </div>
+                <p>Provides two sets of endpoints:</p>
+                <ul>
+                    <li><strong>Standard JPA endpoints:</strong> /employee/*</li>
+                    <li><strong>Native SQL endpoints:</strong> /employee/native/*</li>
+                </ul>
+                
+                <h3>5. Authentication Components</h3>
+                
+                <h4>AuthController</h4>
+                <div class="info-box">
+                    <strong>Purpose:</strong> Handles user authentication and token generation
+                </div>
+                <p><strong>Default Credentials:</strong></p>
+                <ul>
+                    <li>Username: admin</li>
+                    <li>Password: admin@123</li>
+                </ul>
+                
+                <h4>JWTUtil</h4>
+                <div class="info-box">
+                    <strong>Purpose:</strong> Utility class for JWT token operations
+                </div>
+                <p><strong>Methods:</strong></p>
+                <ul>
+                    <li><code>sign(username)</code> - Creates a JWT token</li>
+                    <li><code>verify(token)</code> - Validates and extracts claims from token</li>
+                </ul>
+                <p><strong>Token Configuration:</strong></p>
+                <ul>
+                    <li>Algorithm: HS256</li>
+                    <li>Expiration: 24 hours (86400000 ms)</li>
+                </ul>
+                
+                <h4>JwtInterceptor</h4>
+                <div class="info-box">
+                    <strong>Purpose:</strong> Intercepts requests to validate JWT tokens
+                </div>
+                <p>Validates the Authorization header and extracts Bearer token.</p>
+                
+                <h4>AppConfig</h4>
+                <div class="info-box">
+                    <strong>Purpose:</strong> Configures interceptor rules
+                </div>
+                <p><strong>Excluded Paths (No Authentication Required):</strong></p>
+                <ul>
+                    <li>/employee/**</li>
+                    <li>/auth/login</li>
+                    <li>/error</li>
+                </ul>
+            </section>
+            
+            <!-- Authentication Flow -->
+            <section id="authentication">
+                <h2>🔐 Authentication Flow</h2>
+                
+                <div class="mermaid">
+                    sequenceDiagram
+                        participant Client
+                        participant AuthController
+                        participant JWTUtil
+                        participant JwtInterceptor
+                        participant EmployeeController
+                        
+                        Client->>AuthController: POST /auth/login
+                        AuthController->>AuthController: Validate Credentials
+                        AuthController->>JWTUtil: sign(username)
+                        JWTUtil-->>AuthController: JWT Token
+                        AuthController-->>Client: Return Token
+                        
+                        Note over Client: For Protected Endpoints
+                        
+                        Client->>JwtInterceptor: Request with Bearer Token
+                        JwtInterceptor->>JWTUtil: verify(token)
+                        JWTUtil-->>JwtInterceptor: Valid Claims
+                        JwtInterceptor->>EmployeeController: Forward Request
+                        EmployeeController-->>Client: Response
+                </div>
+                
+                <h3>How to Authenticate</h3>
+                <div class="highlight">
+                    <strong>Step 1:</strong> Login to get JWT token
+                </div>
+                <div class="code-block">POST /auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin@123"
+}
+
+Response:
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9..."
+}</div>
+                
+                <div class="highlight">
+                    <strong>Step 2:</strong> Use token in subsequent requests
+                </div>
+                <div class="code-block">GET /protected-endpoint
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...</div>
+            </section>
+            
+            <!-- API Endpoints Section -->
+            <section id="endpoints">
+                <h2>🌐 API Endpoints</h2>
+                
+                <h3>Standard JPA Endpoints</h3>
+                
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <strong>/employee</strong>
+                    <p>Get all employees</p>
+                    <p><strong>Response:</strong> Array of Employee objects</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <strong>/employee/{id}</strong>
+                    <p>Get employee by ID</p>
+                    <p><strong>Response:</strong> Single Employee object or null</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <strong>/employee</strong>
+                    <p>Create new employee</p>
+                    <p><strong>Request Body:</strong></p>
+                    <div class="code-block">{
+    "name": "John Doe",
+    "department": "IT",
+    "salary": 75000.0
+}</div>
+                    <p><strong>Response:</strong> Created Employee object</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method put">PUT</span>
+                    <strong>/employee/{id}</strong>
+                    <p>Update employee by ID</p>
+                    <p><strong>Request Body:</strong> Employee object with updated fields</p>
+                    <p><strong>Response:</strong> Updated Employee object or null</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method delete">DELETE</span>
+                    <strong>/employee/{id}</strong>
+                    <p>Delete employee by ID</p>
+                    <p><strong>Response:</strong> No content</p>
+                </div>
+                
+                <h3>Native SQL Endpoints</h3>
+                
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <strong>/employee/native?page={page}</strong>
+                    <p>Get paginated employees (5 per page)</p>
+                    <p><strong>Query Parameter:</strong> page (default: 1)</p>
+                    <p><strong>Response:</strong> Array of Employee objects</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <strong>/employee/native/{id}</strong>
+                    <p>Get employee by ID using native SQL</p>
+                    <p><strong>Response:</strong> Single Employee object or null</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <strong>/employee/native</strong>
+                    <p>Create employee using native SQL</p>
+                    <p><strong>Response:</strong> "Employee created via Native SQL"</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method put">PUT</span>
+                    <strong>/employee/native/{id}</strong>
+                    <p>Update employee using native SQL</p>
+                    <p><strong>Response:</strong> "Employee updated via Native SQL"</p>
+                </div>
+                
+                <div class="endpoint">
+                    <span class="method delete">DELETE</span>
+                    <strong>/employee/native/{id}</strong>
+                    <p>Delete employee using native SQL</p>
+                    <p><strong>Response:</strong> "Employee deleted via Native SQL"</p>
+                </div>
+                
+                <h3>Authentication Endpoint</h3>
+                
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <strong>/auth/login</strong>
+                    <p>Authenticate user and get JWT token</p>
+                    <p><strong>Request Body:</strong></p>
+                    <div class="code-block">{
+    "username": "admin",
+    "password": "admin@123"
+}</div>
+                    <p><strong>Success Response:</strong> { "token": "jwt_token_string" }</p>
+                    <p><strong>Error Response:</strong> "Invalid credentials" (Status: 401)</p>
+                </div>
+            </section>
+            
+            <!-- Database Section -->
+            <section id="database">
+                <h2>💾 Database Schema</h2>
+                
+                <h3>Employee Table</h3>
+                <div class="code-block">CREATE TABLE employee (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    department VARCHAR(255),
+    salary DOUBLE
+);</div>
+                
+                <h3>Query Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>JPA (Built-in)</th>
+                        <th>JPQL</th>
+                        <th>Native SQL</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Syntax</strong></td>
+                        <td>Method names</td>
+                        <td>Entity-based</td>
+                        <td>Database-specific SQL</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>Good</td>
+                        <td>Good</td>
+                        <td>Best (optimized)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Portability</strong></td>
+                        <td>Excellent</td>
+                        <td>Excellent</td>
+                        <td>Database-dependent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complexity</strong></td>
+                        <td>Simple</td>
+                        <td>Moderate</td>
+                        <td>Flexible</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Case</strong></td>
+                        <td>Standard CRUD</td>
+                        <td>Complex queries</td>
+                        <td>Performance-critical</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- Setup Section -->
+            <section id="setup">
+                <h2>🚀 Setup and Installation</h2>
+                
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>Java 17 or higher</li>
+                    <li>Maven 3.6+ or Gradle 7+</li>
+                    <li>MySQL/PostgreSQL/H2 Database</li>
+                    <li>IDE (IntelliJ IDEA, Eclipse, or VS Code)</li>
+                </ul>
+                
+                <h3>Required Dependencies (pom.xml)</h3>
+                <div class="code-block">&lt;dependencies&gt;
+    &lt;!-- Spring Boot Starter Web --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    
+    &lt;!-- Spring Boot Starter Data JPA --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    
+    &lt;!-- MySQL Driver (or your database driver) --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-j&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    
+    &lt;!-- JWT Library --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+        &lt;artifactId&gt;jjwt-api&lt;/artifactId&gt;
+        &lt;version&gt;0.11.5&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+        &lt;artifactId&gt;jjwt-impl&lt;/artifactId&gt;
+        &lt;version&gt;0.11.5&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+        &lt;artifactId&gt;jjwt-jackson&lt;/artifactId&gt;
+        &lt;version&gt;0.11.5&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</div>
+                
+                <h3>Application Configuration (application.properties)</h3>
+                <div class="code-block"># Server Configuration
+server.port=8080
+
+# Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/employee_db
+spring.datasource.username=root
+spring.datasource.password=yourpassword
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.format_sql=true</div>
+                
+                <h3>Running the Application</h3>
+                <div class="code-block"># Using Maven
+mvn spring-boot:run
+
+# Using Gradle
+gradle bootRun
+
+# Using JAR
+java -jar demo-0.0.1-SNAPSHOT.jar</div>
+                
+                <h3>Testing the API</h3>
+                <div class="highlight">
+                    <strong>Using cURL:</strong>
+                </div>
+                <div class="code-block"># 1. Login to get token
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"admin@123"}'
+
+# 2. Create an employee (no auth required for /employee/*)
+curl -X POST http://localhost:8080/employee \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","department":"IT","salary":75000}'
+
+# 3. Get all employees
+curl http://localhost:8080/employee
+
+# 4. Get employee by ID
+curl http://localhost:8080/employee/1
+
+# 5. Update employee
+curl -X PUT http://localhost:8080/employee/1 \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Smith","department":"HR","salary":80000}'
+
+# 6. Delete employee
+curl -X DELETE http://localhost:8080/employee/1</div>
+                
+                <div class="highlight">
+                    <strong>Using Postman:</strong>
+                </div>
+                <ol>
+                    <li>Import the API endpoints into Postman</li>
+                    <li>Create a new request to /auth/login and get the token</li>
+                    <li>For protected endpoints, add Authorization header with "Bearer {token}"</li>
+                    <li>Test all CRUD operations</li>
+                </ol>
+            </section>
+            
+            <!-- Additional Information -->
+            <section>
+                <h2>📝 Additional Notes</h2>
+                
+                <h3>Security Considerations</h3>
+                <div class="highlight">
+                    <ul>
+                        <li>⚠️ The current implementation uses hardcoded credentials - implement proper user authentication in production</li>
+                        <li>⚠️ Store JWT secret key in environment variables, not in code</li>
+                        <li>⚠️ Employee endpoints are currently excluded from JWT authentication - consider securing them</li>
+                        <li>⚠️ Implement password hashing (BCrypt) for user passwords</li>
+                        <li>⚠️ Add rate limiting to prevent abuse</li>
+                        <li>⚠️ Implement CORS configuration for production</li>
+                    </ul>
+                </div>
+                
+                <h3>Best Practices Implemented</h3>
+                <ul>
+                    <li>✅ Constructor-based dependency injection</li>
+                    <li>✅ RESTful URL structure</li>
+                    <li>✅ Proper HTTP methods for operations</li>
+                    <li>✅ Separation of concerns (Controller, Repository, Entity)</li>
+                    <li>✅ Transaction management for modifying operations</li>
+                    <li>✅ Optional handling for null safety</li>
+                </ul>
+                
+                <h3>Future Enhancements</h3>
+                <ul>
+                    <li>🔧 Add proper exception handling and custom error responses</li>
+                    <li>🔧 Implement pagination for all endpoints</li>
+                    <li>🔧 Add search and filter capabilities</li>
+                    <li>🔧 Implement audit logging</li>
+                    <li>🔧 Add unit and integration tests</li>
+                    <li>🔧 Implement role-based access control (RBAC)</li>
+                    <li>🔧 Add API documentation with Swagger/OpenAPI</li>
+                    <li>🔧 Implement caching for frequently accessed data</li>
+                </ul>
+            </section>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 Employee Management System Documentation</p>
+            <p>Built with Spring Boot | Documented with ❤️</p>
+        </footer>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
