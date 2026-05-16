@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Auth Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'default',
+            flowchart: { useMaxWidth: true, htmlLabels: true }
+        });
+    </script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --sidebar-bg: #1e293b;
+            --content-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        nav {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: white;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        nav h2 {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #818cf8;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 1rem;
+        }
+
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            background-color: #334155;
+            color: white;
+        }
+
+        /* Content Styles */
+        main {
+            flex: 1;
+            background-color: var(--content-bg);
+            padding: 3rem;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            padding-top: 1rem;
+        }
+
+        h3 {
+            color: #4338ca;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            margin: 1.5rem 0;
+        }
+
+        pre {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            color: #334155;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+        .public { background: #dcfce7; color: #166534; }
+        .private { background: #fee2e2; color: #991b1b; }
+        .method { font-weight: bold; color: #4f46e5; }
+        .body-label { color: #dc2626; font-size: 0.8rem; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <h2>JWT System</h2>
+    <a href="#flow">Auth Flowchart</a>
+    <a href="#emp-flow">Employee Flowchart</a>
+    <a href="#calc-flow">Calc Flowchart</a>
+    <a href="#postman-auth">Postman: Auth</a>
+    <a href="#postman-emp">Postman: Employee</a>
+    <a href="#postman-calc">Postman: Calc</a>
+    <a href="#endpoints">API Endpoints</a>
+    <a href="#run">Run Instructions</a>
+</nav>
+
+<main>
+    <div class="container">
+        <h1>JWT Implementation Notes</h1>
+
+        <section id="flow">
+            <h3>Detailed Authentication Lifecycle</h3>
+            <div class="mermaid">
+graph TD
+    Start([HTTP Request]) --> Config[<b>SecurityConfig.java</b><br/>Filter Chain]
+    Config --> Filter{<b>JwtFilter.java</b>}
+    Filter -->|Has Token| Extract[<b>JwtUtil.java</b>]
+    Extract --> Validate{Validate Token}
+    Validate -->|Valid| SetContext[<b>SecurityContext</b>]
+    SetContext --> Controller[<b>AuthController.java</b>]
+    Controller --> ResponseData[Return Data]
+    ResponseData --> End([Success])
+
+    style Config fill:#e0f2fe,stroke:#0369a1
+    style Filter fill:#fef3c7,stroke:#b45309
+    style Controller fill:#f0fdf4,stroke:#15803d
+            </div>
+        </section>
+
+        <section id="emp-flow">
+            <h3>Employee CRUD Flow (MySQL + JPA)</h3>
+            <div class="mermaid">
+graph TD
+    Req([Request to /api/employees]) --> Config[<b>SecurityConfig.java</b>]
+    Config --> |Permit All| Pass[Bypass Auth]
+    Pass --> Filter[<b>JwtFilter.java</b>]
+    Filter --> Controller[<b>EmployeeController.java</b>]
+    
+    Controller --> JPA[<b>EmployeeRepository</b><br/>Spring Data JPA]
+    Controller --> Native[<b>EmployeeNativeRepository</b><br/>Native SQL]
+    
+    JPA --> DB[(MySQL Database)]
+    Native --> DB
+    
+    DB --> Resp([JSON Response])
+
+    style Config fill:#e0f2fe,stroke:#0369a1
+    style Controller fill:#f1f5f9,stroke:#475569
+    style DB fill:#f5f3ff,stroke:#6d28d9
+            </div>
+        </section>
+
+        <section id="calc-flow">
+            <h3>Calculator Request Flow (Public)</h3>
+            <div class="mermaid">
+graph TD
+    Req([Request to /calc]) --> Config[<b>SecurityConfig.java</b>]
+    Config --> |Permit All| Pass[Bypass Auth]
+    Pass --> Filter[<b>JwtFilter.java</b>]
+    Filter --> Controller[<b>MyCalc.java</b>]
+    Controller --> Resp([Result String])
+
+    style Config fill:#e0f2fe,stroke:#0369a1
+    style Controller fill:#f1f5f9,stroke:#475569
+            </div>
+        </section>
+
+        <section id="postman-auth">
+            <h3>Postman: Authentication</h3>
+            <div class="card">
+                <strong>1. Login Request</strong>
+                <ul>
+                    <li><span class="method">POST</span> <code>http://localhost:8080/auth</code></li>
+                    <li><span class="body-label">BODY (JSON):</span> <code>{"username":"admin", "password":"admin@123"}</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="postman-emp">
+            <h3>Postman: Employee CRUD (MySQL)</h3>
+            <p>These endpoints are <b>Public</b>. Base Path: <code>/api/employees</code></p>
+            <div class="card">
+                <strong>1. Standard JPA Operations</strong>
+                <ul>
+                    <li><span class="method">GET</span> <code>/api/employees</code> (List all)</li>
+                    <li><span class="method">POST</span> <code>/api/employees</code> (Add new)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <strong>2. Native SQL Operations</strong>
+                <ul>
+                    <li><span class="method">GET</span> <code>/api/employees/native</code> (Fetch all using SQL)</li>
+                    <li><span class="method">POST</span> <code>/api/employees/native</code> (Insert using SQL)</li>
+                    <li><span class="method">PUT</span> <code>/api/employees/native/{id}?salary=90000</code> (Update salary)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="postman-calc">
+            <h3>Postman: Calculator (Public)</h3>
+            <div class="card">
+                <strong>Addition</strong>
+                <ul>
+                    <li><span class="method">GET</span> <code>http://localhost:8080/calc?num1=10&num2=5</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="endpoints">
+            <h3>API Endpoints</h3>
+            <div class="card">
+                <strong>Employee System (MySQL)</strong>
+                <ul>
+                    <li><code>/api/employees</code> (JPA CRUD) <span class="badge public">Public</span></li>
+                    <li><code>/api/employees/native/**</code> (Native SQL) <span class="badge public">Public</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <strong>Calculator</strong>
+                <ul>
+                    <li><code>/calc</code> (GET, POST, PUT, DELETE) <span class="badge public">Public</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <strong>Auth</strong>
+                <ul>
+                    <li><code>POST /auth</code> <span class="badge public">Public</span></li>
+                    <li><code>/hello</code>, <code>/dashboard</code> <span class="badge private">Private</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="run">
+            <h3>Run Instructions</h3>
+            <div class="card">
+                <p>Linux/macOS: <code>./mvnw spring-boot:run</code></p>
+                <p>Windows: <code>mvnw.cmd spring-boot:run</code></p>
+            </div>
+        </section>
+    </div>
+</main>
+
+</body>
+</html>
